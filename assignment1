@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<h1>Some Basic Question</h1>
+
+<body>
+  <script>
+    // Q1. Write a program to find all pairs of an integer array whose sum is equal to a given number?
+    let num = [1, 6, 3, 4, 5, 5, 8, 9, 4, 5]
+    let count = 0;
+    function pair(total) {
+      for (let i = 0; i < num.length - 1; i++) {
+        for (let j = i + 1; j < num.length; j++) {
+          if (total == num[i] + num[j]) {
+            console.log(`${num[i]} + ${num[j]} = ${total}`)
+            count++
+          }
+        }
+      }
+      console.log("Total no. of pairs is:", count)
+    }
+    pair(13)
+
+
+    // Q2. Write a program to reverse an array in place? In place means you cannot create a new array. You have to update the original array.
+     let array = [2, 3, 4, 8, 9, 5]
+    let arrayNew = ["Mayank", "John", "Ram", "Gita"]
+    console.log(array.reverse().join().split(","))
+    console.log(arrayNew.reverse().join().split(","))
+
+
+    //Q3. Write a program to check if two strings are a rotation of each other?
+    function findRotationOfString(str1, str2) {
+      if ((str1 + str1).indexOf(str2) != -1 && str1.length == str2.length) {
+        console.log("Str1 and Str2 are rotation of each other")
+      }
+      else {
+        console.log("Str1 and Str2 are not rotation of each other")
+      }
+    }
+    findRotationOfString("ABCED", "DEABC")
+
+
+    //Q4  Write a program to print the first non-repeated character from a string?
+    function nonRepeatedCharacter(string) {
+      for (let i = 0; i < string.length; i++) {
+        let char = string.charAt(i)
+        if (string.indexOf(char) === string.lastIndexOf(char)) {
+          console.log("Non Repeated Character", char)
+          break
+        }
+      }
+    }
+ 
+    function nonRepeatedCharacter1(string){
+      let count=0;
+         let array = string.split("")
+        for(let i=0 ; i<array.length; i++){
+          count=0
+          for(let j=0 ; j<array.length; j++){
+          if(array[i] === array[j]){
+             count+=1
+          }
+          }
+          // console.log(`${array[i]} = ${count}`)
+          if(count<2){
+        console.log("Non repeated character is " , array[i])
+        break
+      }
+    }    
+    }
+
+    nonRepeatedCharacter("amyamsy")
+    nonRepeatedCharacter1("geeksforgeeks")
+
+
+    // Q5. Read about the Tower of Hanoi algorithm. Write a program to implement it.
+    //no. of transaction = 2**n - 1
+    function towerOfHanoi(n,fromRod,toRod,usingRod){
+     if(n === 1){ //Shift last disk in A from A to C
+      console.log(`Move disk 1 from ${fromRod} to ${toRod}`)
+      return;
+     }
+       //shift n-1 disks from A to C using B
+       towerOfHanoi(n-1, fromRod, usingRod, toRod)
+         console.log(`Move disk ${n} from ${fromRod} to ${toRod}`)
+    
+         //shift n-1 disks from B to C using A
+           towerOfHanoi(n-1, usingRod, toRod , fromRod )}
+     
+    let n = 3
+    towerOfHanoi(n, "A" , "C" ,"B" )     //A,C,B are no. of rods that are fixed and n is no. of disk 
+ 
+
+// Q6 and Q7  function for operator
+        function currentIsOperator(s){
+             switch(s){
+                  case "+":
+                  case "-":
+                  case "*":
+                 case "/":
+                 return true;
+             }
+               return false;
+        }
+
+
+
+    //Q6 Write a program to convert postfix to prefix expression.
+        let prefix = []
+     
+        function fromPostfixToPrefix(postFix){
+                 for(let i=0 ; i < postFix.length; i++){
+                     current = postFix[i]
+                   if(currentIsOperator(current)){
+                    let operand1 = prefix[prefix.length-1]
+                         prefix.pop()
+
+                         let operand2 = prefix[prefix.length-1] 
+                         prefix.pop() 
+                         
+                         let rearrangedStack = current + operand2 + operand1
+                         prefix.push(rearrangedStack)
+
+                   }
+               else{
+                   prefix.push(current + "")
+                }
+                 }
+                 return prefix
+       }
+
+
+      let postFix = "ABC/-AK/L-*"
+
+      
+    console.log(`Prefix of ${postFix}`, fromPostfixToPrefix(postFix))
+
+
+    // Q7. Write a program to convert prefix expression to infix expression.
+    let infix = []
+
+    function fromPrefixToInfix(prefix){
+      let len = prefix.length
+           for(let i= len-1; i>=0; i--){
+               let currentItem = prefix[i] 
+       if(currentIsOperator(currentItem)){
+                  let operand1 = infix[infix.length-1]
+                         infix.pop()
+
+                         let operand2 = infix[infix.length-1] 
+                         infix.pop() 
+                         
+           let rearrangedStack = "(" + operand1 + currentItem + operand2 + ")"
+          //  console.log(rearrangedStack)
+                         infix.push(rearrangedStack)
+
+
+                }
+          else{
+               infix.push(currentItem + "")
+              //  console.log("infixINElse",infix)
+          }
+           }
+           return infix
+              }
+        
+         
+    let newPrefix = "*-A/BC-/AKL"
+    console.log(`Infix of ${newPrefix}`, fromPrefixToInfix(newPrefix))
+  
+  // Q8. Write a program to check if all the brackets are closed in a given code snippet.
+     
+       function bracketComplete(input){ 
+        let arr = []
+           for(let i=0; i<input.length; i++){
+             let currentBracket = input[i]
+    if(currentBracket === "(" || currentBracket === "[" || currentBracket === "{" ){
+      arr.push(currentBracket)
+     
+    }
+   else if(currentBracket === "}" && arr[arr.length-1] === "{") {
+            arr.pop()
+        } else if(currentBracket === ")" && arr[arr.length-1] === "(") {
+            arr.pop()
+        } else if(currentBracket === "]" && arr[arr.length-1] === "[") {
+            arr.pop()
+                  } 
+        }
+        
+        // return arr
+            return arr.length === 0;
+ }
+             let input = "()[]{})"
+       console.log(bracketComplete(input))
+  
+
+
+     //Q9. Write a program to reverse a stack.
+     class Stack { 
+    constructor(){  
+        this.elements = []; 
+    }
+
+    push(element){ 
+        this.elements.push(element);
+    }
+
+    pop(){ 
+      return this.elements.pop();
+                }
+
+    isEmpty(){ 
+        return this.elements.length == 0;
+    }
+
+
+    print(){
+        return this.elements;
+    }
+
+}
+class Queue { 
+    constructor(){  
+        this.elements = []; 
+    }
+
+    enqueue(element){ 
+        this.elements.push(element) 
+    }
+    
+    dequeue() {
+     return this.elements.shift();      
+    }
+
+    isEmpty() {
+        return this.elements.length == 0;
+    }
+}
+
+function reverse(stack){ 
+    const queue = new Queue();        //Creating a new queue
+    while(!stack.isEmpty()){         // Looping until the stack is empty.
+       queue.enqueue(stack.pop());    //Enqueue the popped stack element to queue.
+    } 
+    
+    while(!queue.isEmpty()){          //Looping until the queue is empty.
+       stack.push(queue.dequeue());    //Pushed the dequeued queue element to stack
+    }
+}
+//Creates a new stack.
+const stack = new Stack(); 
+//Pushes 3 strings onto the stack
+stack.push('There');
+stack.push('Welcome');
+stack.push('Varsha'); 
+stack.push('Hi'); 
+
+console.log('Printing stack before reversal: ', stack.print());
+
+reverse(stack);
+
+console.log('Printing stack after reversal: ', stack.print());
+
+
+     // Q10. Write a program to find the smallest number using a stack.
+
+  class Node {
+    constructor(val){
+        this.val = val;
+        this.next = null; 
+    }
+}
+
+class ItemStack {
+    constructor(){
+        this.first = null;
+        this.last = null;
+        this.length = 0;
+        this.minStack = new MinStack();
+    }
+
+    push(val){
+        let newNode = new Node(val)
+        if (this.length === 0){
+            this.first = newNode;
+            this.last = newNode;            }
+            else{
+           let temp = this.first;
+           this.first = newNode;
+           this.first.next= temp;
+        }
+
+      this.minStack.push(val)
+         this.length++;     
+        //  console.log("length",this.length)
+        return this.length;
+    }
+
+    pop(){
+        if (this.length === 0) return null;
+
+        let temp = this.first;
+
+        if (this.length === 1){
+            this.last = null;
+        }        
+        this.first = this.first.next;    
+        this.length--;
+        
+        if(temp.val === this.minStack.first.val){
+            this.minStack.pop()
+        }
+
+        return temp;
+    }
+
+    min(){
+        if(this.length === 0) return undefined;
+        else return this.minStack.first.val;
+    }
+
+}
+
+
+
+class MinStack {
+
+    constructor(){
+        this.first = null;
+        this.last = null;
+        this.length = 0;
+    }
+
+    push(val) {
+        let newNode = new Node(val);
+        if (this.length === 0) {
+            this.first = newNode;
+            this.last = newNode;
+            this.length++;
+        }else {
+            if (val < this.first.val) {
+                let temp = this.first;
+                this.first = newNode;
+                this.first.next= temp;
+                this.length++;
+            }
+        }
+
+        return this.length;
+    }
+
+    pop() {
+        
+        let temp = this.first;
+
+        if (this.length === 1){
+            this.last = null;
+        }        
+        this.first = this.first.next;        
+        this.length--;
+        return temp;
+    }
+
+}
+
+
+
+
+let itemStack = new ItemStack();
+itemStack.push(2);
+itemStack.push(3);
+itemStack.push(4);
+itemStack.push(1);
+itemStack.push(0);
+console.log("ItemStack:", itemStack)
+console.log(itemStack.min());
+itemStack.pop();
+console.log(itemStack.min());
+itemStack.pop();
+console.log(itemStack.min());
+itemStack.pop();
+console.log(itemStack.min());
+
+  
+
+
+
+
+
+  </script>
+</body>
+
+</html>
